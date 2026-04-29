@@ -19,6 +19,7 @@ CONF_LOCAL_MODEL = "local_model"
 AI_PROVIDERS = [
     "llama",
     "openai",
+    "copilot",
     "gemini",
     "openrouter",
     "anthropic",
@@ -26,6 +27,10 @@ AI_PROVIDERS = [
     "zai",
     "local",
 ]
+
+# Copilot proxy configuration
+CONF_COPILOT_URL = "copilot_url"
+CONF_COPILOT_MODEL = "copilot_model"
 
 # AI Provider constants
 CONF_MODELS = "models"

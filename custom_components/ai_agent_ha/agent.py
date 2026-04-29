@@ -486,10 +486,11 @@ class LlamaClient(BaseAIClient):
 
 
 class OpenAIClient(BaseAIClient):
-    def __init__(self, token, model="gpt-3.5-turbo"):
+    def __init__(self, token, model="gpt-3.5-turbo", base_url=None):
         self.token = token
         self.model = model
-        self.api_url = "https://api.openai.com/v1/chat/completions"
+        self.api_url = f"{base_url}/v1/chat/completions" if base_url else "https://api.openai.com/v1/chat/completions"
+        self._custom_base = base_url is not None
 
     def _is_restricted_model(self):
         """Check if the model has restricted parameters (no temperature, top_p, etc.)."""
@@ -502,8 +503,8 @@ class OpenAIClient(BaseAIClient):
     async def get_response(self, messages, **kwargs):
         _LOGGER.debug("Making request to OpenAI API with model: %s", self.model)
 
-        # Validate token
-        if not self.token or not self.token.startswith("sk-"):
+        # Validate token (skip for custom base URL like Copilot proxy)
+        if not self._custom_base and (not self.token or not self.token.startswith("sk-")):
             raise Exception("Invalid OpenAI API key format")
 
         headers = {
@@ -1174,6 +1175,10 @@ class AiAgentHaAgent:
         elif provider == "gemini":
             model = models_config.get("gemini", "gemini-2.5-flash")
             self.ai_client = GeminiClient(config.get("gemini_token"), model)
+        elif provider == "copilot":
+            model = models_config.get("copilot", "claude-opus-4.7")
+            copilot_url = config.get("copilot_url", "http://localhost:4141")
+            self.ai_client = OpenAIClient("dummy", model, base_url=copilot_url)
         elif provider == "openrouter":
             model = models_config.get("openrouter", "openai/gpt-4o")
             self.ai_client = OpenRouterClient(config.get("openrouter_token"), model)
@@ -1220,6 +1225,9 @@ class AiAgentHaAgent:
             token = self.config.get("alter_token")
         elif provider == "zai":
             token = self.config.get("zai_token")
+        elif provider == "copilot":
+            # Copilot proxy doesn't need a real token
+            return True
         elif provider == "local":
             token = self.config.get("local_url")
         else:
