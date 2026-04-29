@@ -1,0 +1,19 @@
+{
+  "name": "Copilot API Proxy",
+  "version": "1.0.0",
+  "slug": "copilot_proxy",
+  "description": "Runs GitHub Copilot API proxy (OpenAI-compatible) for use with AI Agent HA",
+  "url": "https://github.com/deankroker/ai_agent_ha",
+  "arch": ["amd64", "aarch64"],
+  "startup": "application",
+  "boot": "auto",
+  "ports": {
+    "4141/tcp": 4141
+  },
+  "ports_description": {
+    "4141/tcp": "Copilot API proxy (OpenAI-compatible endpoint)"
+  },
+  "options": {},
+  "schema": {},
+  "image": "ghcr.io/deankroker/copilot-proxy-addon-{arch}"
+}

@@ -1,12 +1,23 @@
-# AI Agent HA
+# AI Agent HA + Copilot Proxy
 
-A powerful Home Assistant custom integration that connects your Home Assistant instance with multiple AI providers (OpenAI, Google Gemini, Anthropic (Claude), OpenRouter, Alter, z.ai, and Llama) to translate user requests into valid Home Assistant operations, including creating automations automatically!
+A powerful Home Assistant custom integration that connects your Home Assistant instance with multiple AI providers (OpenAI, Google Gemini, Anthropic (Claude), OpenRouter, **GitHub Copilot**, and more) to translate user requests into valid Home Assistant operations, including creating automations automatically!
+
+This fork adds **GitHub Copilot** as a provider via the copilot-api proxy, plus an optional HA add-on to run the proxy directly on your HA machine.
 
 ## 🚀 Quick Install
 
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=sbenodiz&repository=ai_agent_ha&category=integration)
+### Integration (HACS)
 
-Click the button above to install AI Agent HA directly through HACS, or see the [detailed installation instructions](#-installation) below.
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=deankroker&repository=ai_agent_ha&category=integration)
+
+### Copilot Proxy Add-on
+
+[![Add add-on repository to HA](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fdeankroker%2Fai_agent_ha)
+
+1. Click the badge above to add this repo as an add-on repository
+2. Install "Copilot API Proxy" from the add-on store
+3. Start the add-on — check logs for GitHub auth URL on first run
+4. Configure AI Agent HA with provider "copilot" and URL `http://localhost:4141`
 
 
 ## ☕ Support the Project
